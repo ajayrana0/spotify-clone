@@ -1,0 +1,43 @@
+const playMusic = (track)=>{
+    let audio = new Audio(track)
+    audio.play()
+}
+async function main() {
+    let currentSong;
+    //get list the  all songes
+
+    let songs = await fetchSonglist()
+    console.log(songs)
+
+    //show all thw song play list in this function 
+    let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0]
+    for (const song of songs) {
+        songUL.innerHTML = songUL.innerHTML + (`<li> 
+             
+                            <img class="invert" src="music.svg" alt="">
+                            <div class="songinfo">
+                                <div>${song.replaceAll("%20", " ")} </div>
+                               <div>ajay</div>
+                            </div>
+                            <div class="playnow">
+                                <span>play Now</span>    
+                                <img class="invert" src="play.svg" alt="">
+                            </div>  </li>`)
+    }
+
+    // Attach the event listener each song
+
+    Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
+        e.addEventListener("click", element=>{
+            console.log(e.querySelector(".songinfo").firstElementChild.innerHTML)
+            playMusic(e.querySelector(".songinfo").firstElementChild.innerHTML.trim())
+
+        })
+    })
+
+
+    //play the first song
+    // var audio = new Audio(songs[0]);
+    // audio.play();
+}
+main()
